@@ -45,7 +45,45 @@ decode_status maxqx0_src_decode(uint16_t code,char * buf)
 
     if(determine_masked_src(code,SRC_MN_N,SRC_MASK0_5B))
     {
-        sprintf(buf,"M[%d][%d]",get_src_4n(code),get_src_3n(code));
+        if(get_src_3n(code) == 2)
+        {
+            if(get_src_4n(code) == 0)
+            {
+                sprintf(buf,"MCNT");
+            }
+            else if(get_src_4n(code) == 1)
+            {
+                sprintf(buf,"MA");
+            }
+            else if(get_src_4n(code) == 2)
+            {
+                sprintf(buf,"MB");
+            }
+            else if(get_src_4n(code) == 4)
+            {
+                sprintf(buf,"MC0");
+            }
+            else if(get_src_4n(code) == 5)
+            {
+                sprintf(buf,"MC1");
+            }
+            else if(get_src_4n(code) == 11)
+            {
+                sprintf(buf,"MC0R");
+            }
+            else if(get_src_4n(code) == 12)
+            {
+                sprintf(buf,"MC1R");
+            }
+            else
+            {
+                sprintf(buf,"M%d[%d]",get_src_3n(code),get_src_4n(code));
+            }
+        }
+        else
+        {
+            sprintf(buf,"M%d[%d]",get_src_3n(code),get_src_4n(code));
+        }
         return decode_success;
     }
 

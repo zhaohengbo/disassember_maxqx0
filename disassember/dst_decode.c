@@ -107,7 +107,37 @@ decode_status maxqx0_dst_decode(uint16_t code,char * buf,bool *prefix_on)
 
     if(determine_masked_dst(code,DST_MN_N,DST_MASK3B))
     {
-        sprintf(buf,"M[%d][%d]",get_dst_3na(code),get_dst_3nb(code));
+        if(get_dst_3na(code) == 2)
+        {
+            if(get_dst_3nb(code) == 0)
+            {
+                sprintf(buf,"MCNT");
+            }
+            else if(get_dst_3nb(code) == 1)
+            {
+                sprintf(buf,"MA");
+            }
+            else if(get_dst_3nb(code) == 2)
+            {
+                sprintf(buf,"MB");
+            }
+            else if(get_dst_3nb(code) == 4)
+            {
+                sprintf(buf,"MC0");
+            }
+            else if(get_dst_3nb(code) == 5)
+            {
+                sprintf(buf,"MC1");
+            }
+            else
+            {
+                sprintf(buf,"M%d[%d]",get_dst_3na(code),get_dst_3nb(code));
+            }
+        }
+        else
+        {
+            sprintf(buf,"M%d[%d]",get_dst_3na(code),get_dst_3nb(code));
+        }
         return decode_success;
     }
 
